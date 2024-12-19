@@ -1,15 +1,13 @@
 <?php
-// URL da API externa
 $api_url = "https://catfact.ninja/fact";
 
 try {
-    // Faz a requisição à API externa
-    $response = file_get_contents($api_url);
+    $ch = curl_init($api_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
 
-    // Decodifica a resposta
     $data = json_decode($response, true);
-
-    // Verifica se a API retornou um fato
     if (isset($data['fact'])) {
         echo $data['fact'];
     } else {
