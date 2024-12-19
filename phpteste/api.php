@@ -24,13 +24,15 @@ try {
         throw new Exception('Erro ao decodificar JSON: ' . json_last_error_msg());
     }
 
-    // Exibindo a resposta para debug
-    echo "<pre>Resposta da API:\n";
-    print_r($data); // Exibe o array decodificado para ver o conteúdo
-    echo "</pre>";
+    // Exibindo o fato retornado pela API
+    if (isset($data['fact'])) {
+        echo "<p>Fato sobre gatos: " . htmlspecialchars($data['fact']) . "</p>";
+    } else {
+        echo "<p>Não foi possível obter um fato sobre gatos.</p>";
+    }
 
 } catch (Exception $e) {
     // Exibindo erros, caso ocorram
-    echo "Erro: " . $e->getMessage();
+    echo "<p>Erro: " . $e->getMessage() . "</p>";
 }
 ?>
