@@ -7,6 +7,8 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $api_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+// Opcional: define um User-Agent
+curl_setopt($ch, CURLOPT_USERAGENT, 'MyCatFactApp/1.0');
 
 $response = curl_exec($ch);
 $error = curl_error($ch);
@@ -18,6 +20,8 @@ if ($response === false) {
 }
 
 $data = json_decode($response, true);
+
+// Verificação simples do resultado
 if (isset($data['fact'])) {
     echo $data['fact'];
 } else {
