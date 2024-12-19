@@ -2,7 +2,18 @@
 $api_url = "https://catfact.ninja/fact";
 
 try {
-    $response = file_get_contents($api_url);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $api_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        throw new Exception('Erro cURL: ' . curl_error($ch));
+    }
+
+    curl_close($ch);
+
+    // Exibir a resposta para debug
     echo "<pre>Resposta da API:\n";
     echo htmlspecialchars($response);
     echo "</pre>";
