@@ -1,1 +1,1 @@
-web: php -S 0.0.0.0:$PORT -t .
+web: docker build -t meu-app . && docker run -p $PORT:8000 meu-app
