@@ -6,6 +6,7 @@ try {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $api_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Timeout de 10 segundos
 
     // Executando a requisição
     $response = curl_exec($ch);
@@ -13,6 +14,12 @@ try {
     // Verificando se ocorreu algum erro na requisição cURL
     if ($response === false) {
         throw new Exception('Erro cURL: ' . curl_error($ch));
+    }
+
+    // Verificando o código de status HTTP
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if ($http_code !== 200) {
+        throw new Exception('Erro na requisição HTTP: ' . $http_code);
     }
 
     // Fechando a sessão cURL
